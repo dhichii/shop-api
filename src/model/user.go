@@ -17,4 +17,5 @@ type User struct {
 	IsAdmin      bool
 	Updated_at   time.Time `gorm:"type:date"`
 	CreatedAt    time.Time `gorm:"type:date"`
+	Toko         Toko      `gorm:"foreignKey:IdUser"`
 }
