@@ -15,7 +15,7 @@ type (
 	}
 
 	ResponseParam struct {
-		Ctx      fiber.Ctx
+		Ctx      *fiber.Ctx
 		HttpCode int
 		Method   string
 		Errors   []string
