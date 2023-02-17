@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"shop-api/src/config/env"
+	"shop-api/src/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -22,5 +23,8 @@ func InitMySQL() *gorm.DB {
 }
 
 func MigrateMySQL() {
-	InitMySQL().AutoMigrate()
+	InitMySQL().AutoMigrate(
+		&model.User{},
+		&model.Toko{},
+	)
 }
