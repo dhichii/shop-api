@@ -15,7 +15,7 @@ type User struct {
 	IdProvinsi   string    `gorm:"type:varchar(255)"`
 	IdKota       string    `gorm:"type:varchar(255)"`
 	IsAdmin      bool
-	Updated_at   time.Time `gorm:"type:date"`
+	UpdatedAt    time.Time `gorm:"type:date"`
 	CreatedAt    time.Time `gorm:"type:date"`
 	Toko         Toko      `gorm:"foreignKey:IdUser"`
 }
