@@ -1,6 +1,7 @@
 package main
 
 import (
+	"shop-api/src/config/database"
 	"shop-api/src/config/env"
 	"shop-api/src/router"
 
@@ -12,6 +13,9 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
+
+	// migrate gorm
+	database.MigrateMySQL()
 
 	app := router.InitServer()
 	app.Listen(":" + env.GetServerEnv())
