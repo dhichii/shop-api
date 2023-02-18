@@ -24,7 +24,7 @@ type (
 )
 
 func SuccessResponse(param ResponseParam) error {
-	message := fmt.Sprintf("Success to %s Data", param.Method)
+	message := fmt.Sprintf("Succeed to %s Data", param.Method)
 	return param.Ctx.Status(param.HttpCode).
 		JSON(
 			Response{
