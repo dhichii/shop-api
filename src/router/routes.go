@@ -2,22 +2,25 @@ package router
 
 import (
 	"net/http"
-	"shop-api/src/http/handler"
+	"shop-api/src/api/handler"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func InitServer() *fiber.App {
-	route := fiber.New()
-	route.Use(cors.New())
+	app := fiber.New()
+	app.Use(cors.New())
 
-	route.Get("/", func(c *fiber.Ctx) error {
+	api := app.Group("/api")
+	api.Get("/", func(c *fiber.Ctx) error {
 		return c.Status(http.StatusOK).SendString("Welcome to Shop API")
 	})
 
-	auth := route.Group("/auth")
+	v1 := api.Group("/v1")
+	auth := v1.Group("/auth")
+	auth.Post("/login", handler.LoginHandler)
 	auth.Post("/register", handler.RegisterHandler)
 
-	return route
+	return app
 }
