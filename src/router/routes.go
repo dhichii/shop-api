@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 	"shop-api/src/api/handler"
+	"shop-api/src/middleware"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -21,6 +22,13 @@ func InitServer() *fiber.App {
 	auth := v1.Group("/auth")
 	auth.Post("/login", handler.LoginHandler)
 	auth.Post("/register", handler.RegisterHandler)
+
+	category := v1.Group("/category", middleware.Authentication())
+	category.Get("", handler.GetAllCategoryHandler)
+	category.Get("/:id", handler.GetCategoryByIDHandler)
+	category.Post("", middleware.GrantAdmin(), handler.CreateCategoryHandler)
+	category.Put("/:id", middleware.GrantAdmin(), handler.UpdateCategoryHandler)
+	category.Delete("/:id", middleware.GrantAdmin(), handler.DeleteCategoryHandler)
 
 	return app
 }
