@@ -31,5 +31,6 @@ func MigrateMySQL() {
 	InitMySQL().AutoMigrate(
 		&model.User{},
 		&model.Toko{},
+		&model.Category{},
 	)
 }
