@@ -30,5 +30,9 @@ func InitServer() *fiber.App {
 	category.Put("/:id", middleware.GrantAdmin(), handler.UpdateCategoryHandler)
 	category.Delete("/:id", middleware.GrantAdmin(), handler.DeleteCategoryHandler)
 
+	user := v1.Group("/user", middleware.Authentication())
+	user.Get("", handler.GetMyProfileHandler)
+	user.Put("", handler.UpdateProfileHandler)
+
 	return app
 }
