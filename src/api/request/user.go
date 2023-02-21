@@ -21,7 +21,7 @@ type UpdateUserRequest struct {
 func (r *UpdateUserRequest) MapRequest() *model.User {
 	return &model.User{
 		Nama:         r.Nama,
-		KataSandi:    r.KataSandi,
+		KataSandi:    helper.CreateHash(r.KataSandi),
 		NoTelp:       r.NoTelp,
 		TanggalLahir: helper.ConvertStringToDate(r.TanggalLahir),
 		JenisKelamin: r.JenisKelamin,
