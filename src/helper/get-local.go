@@ -5,6 +5,6 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func GetUserIDFromLocals(c *fiber.Ctx) float64 {
-	return c.Locals("claims").(jwt.MapClaims)["id"].(float64)
+func GetUserIDFromLocals(c *fiber.Ctx) int {
+	return int(c.Locals("claims").(jwt.MapClaims)["id"].(float64))
 }
