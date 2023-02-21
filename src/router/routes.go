@@ -34,5 +34,12 @@ func InitServer() *fiber.App {
 	user.Get("", handler.GetMyProfileHandler)
 	user.Put("", handler.UpdateProfileHandler)
 
+	alamat := v1.Group("/user/alamat").Use(middleware.Authentication())
+	alamat.Get("", handler.GetMyAlamatHandler)
+	alamat.Get("/:id", handler.GetAlamatByIDHandler)
+	alamat.Post("", handler.CreateAlamatHandler)
+	alamat.Put("/:id", handler.UpdateAlamatHandler)
+	alamat.Delete("/:id", handler.DeleteAlamatHandler)
+
 	return app
 }
