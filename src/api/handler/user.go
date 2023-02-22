@@ -76,7 +76,7 @@ func GetMyProfileHandler(c *fiber.Ctx) error {
 
 func UpdateProfileHandler(c *fiber.Ctx) error {
 	method := "UPDATE"
-	request := &request.UpdateUserRequest{}
+	request := &request.UpdateUser{}
 	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},

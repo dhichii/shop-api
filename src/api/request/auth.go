@@ -6,12 +6,12 @@ import (
 )
 
 type (
-	LoginRequest struct {
+	Login struct {
 		NoTelp    string `json:"no_telp"`
 		KataSandi string `json:"kata_sandi"`
 	}
 
-	RegisterRequest struct {
+	Register struct {
 		Nama         string `json:"nama"`
 		KataSandi    string `json:"kata_sandi"`
 		NoTelp       string `json:"no_telp"`
@@ -23,7 +23,7 @@ type (
 	}
 )
 
-func MapRegisterRequest(request *RegisterRequest) *model.User {
+func MapRegisterRequest(request *Register) *model.User {
 	return &model.User{
 		Nama:         request.Nama,
 		KataSandi:    helper.CreateHash(request.KataSandi),

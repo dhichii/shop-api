@@ -5,7 +5,7 @@ import (
 	"shop-api/src/model"
 )
 
-type UpdateUserRequest struct {
+type UpdateUser struct {
 	Nama         string `json:"nama"`
 	KataSandi    string `json:"kata_sandi"`
 	NoTelp       string `json:"no_telp"`
@@ -18,7 +18,7 @@ type UpdateUserRequest struct {
 	IdKota       string `json:"id_kota"`
 }
 
-func (r *UpdateUserRequest) MapRequest() *model.User {
+func (r *UpdateUser) MapRequest() *model.User {
 	return &model.User{
 		Nama:         r.Nama,
 		KataSandi:    helper.CreateHash(r.KataSandi),

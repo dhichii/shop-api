@@ -90,7 +90,7 @@ func GetCategoryByIDHandler(c *fiber.Ctx) error {
 
 func CreateCategoryHandler(c *fiber.Ctx) error {
 	method := "POST"
-	request := &request.CategoryRequest{}
+	request := &request.Category{}
 	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},
@@ -133,7 +133,7 @@ func UpdateCategoryHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	request := &request.CategoryRequest{}
+	request := &request.Category{}
 	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},
