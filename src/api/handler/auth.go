@@ -100,7 +100,7 @@ func LoginHandler(c *fiber.Ctx) error {
 			HttpCode: http.StatusOK,
 			Method:   method,
 			Errors:   nil,
-			Data:     param.MapToLoginResponse(),
+			Data:     param.MapToResponse(),
 		},
 	)
 }
