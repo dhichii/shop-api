@@ -11,15 +11,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var table = "category"
-
 func GetAllCategoryHandler(c *fiber.Ctx) error {
 	method := "GET"
 	DB := database.InitMySQL()
 	ctx := c.Context()
-	data := []response.CategoryResponse{}
+	data := []response.Category{}
 
-	if err := DB.WithContext(ctx).Table(table).Find(&data).Error; err != nil {
+	if err := DB.WithContext(ctx).Find(&data).Error; err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{
 				Ctx:      c,
@@ -53,9 +51,9 @@ func GetCategoryByIDHandler(c *fiber.Ctx) error {
 
 	DB := database.InitMySQL()
 	ctx := c.Context()
-	data := &response.CategoryResponse{}
+	data := &response.Category{}
 
-	if err := DB.WithContext(ctx).Table(table).First(data, id).Error; err != nil {
+	if err := DB.WithContext(ctx).First(data, id).Error; err != nil {
 		if err.Error() == helper.NOT_FOUND {
 			return helper.FailedResponse(
 				helper.ResponseParam{
@@ -92,7 +90,7 @@ func GetCategoryByIDHandler(c *fiber.Ctx) error {
 
 func CreateCategoryHandler(c *fiber.Ctx) error {
 	method := "POST"
-	request := &request.CategoryRequest{}
+	request := &request.Category{}
 	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},
@@ -103,7 +101,7 @@ func CreateCategoryHandler(c *fiber.Ctx) error {
 	ctx := c.Context()
 	data := request.MapRequest()
 
-	if err := DB.WithContext(ctx).Table(table).Create(data).Error; err != nil {
+	if err := DB.WithContext(ctx).Create(data).Error; err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{
 				Ctx:      c,
@@ -135,7 +133,7 @@ func UpdateCategoryHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	request := &request.CategoryRequest{}
+	request := &request.Category{}
 	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},
@@ -145,26 +143,25 @@ func UpdateCategoryHandler(c *fiber.Ctx) error {
 	DB := database.InitMySQL()
 	ctx := c.Context()
 
-	query := DB.WithContext(ctx).Table(table).Where("id", id).Updates(request.MapRequest())
-	if query.Error != nil {
+	if err := DB.WithContext(ctx).Where("id", id).First(new(model.Category)).Updates(request.MapRequest()).Error; err != nil {
+		if err.Error() == helper.NOT_FOUND {
+			return helper.FailedResponse(
+				helper.ResponseParam{
+					Ctx:      c,
+					HttpCode: http.StatusBadRequest,
+					Method:   method,
+					Errors:   []string{helper.NOT_FOUND},
+					Data:     nil,
+				},
+			)
+		}
+
 		return helper.FailedResponse(
 			helper.ResponseParam{
 				Ctx:      c,
 				HttpCode: http.StatusInternalServerError,
 				Method:   method,
 				Errors:   []string{http.StatusText(http.StatusInternalServerError)},
-				Data:     nil,
-			},
-		)
-	}
-
-	if query.RowsAffected <= 0 && query.Error == nil {
-		return helper.FailedResponse(
-			helper.ResponseParam{
-				Ctx:      c,
-				HttpCode: http.StatusBadRequest,
-				Method:   method,
-				Errors:   []string{helper.NOT_FOUND},
 				Data:     nil,
 			},
 		)

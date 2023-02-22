@@ -8,34 +8,34 @@ import (
 type (
 	LoginParam struct {
 		User     *model.User
-		Provinsi *ProvinsiResponse
-		Kota     *KotaResponse
+		Provinsi *Provinsi
+		Kota     *Kota
 		Token    string
 	}
 
-	LoginResponse struct {
-		Nama         string           `json:"nama"`
-		NoTelp       string           `json:"no_telp"`
-		TanggalLahir string           `json:"tanggal_Lahir"`
-		Tentang      string           `json:"tentang"`
-		Pekerjaan    string           `json:"pekerjaan"`
-		Email        string           `json:"email"`
-		Provinsi     ProvinsiResponse `json:"id_provinsi"`
-		Kota         KotaResponse     `json:"id_kota"`
-		Token        string           `json:"token"`
+	Login struct {
+		Nama         string   `json:"nama"`
+		NoTep        string   `json:"no_tep"`
+		TanggalLahir string   `json:"tanggal_Lahir"`
+		Tentang      string   `json:"tentang"`
+		Pekerjaan    string   `json:"pekerjaan"`
+		Email        string   `json:"email"`
+		Provinsi     Provinsi `json:"id_provinsi"`
+		Kota         Kota     `json:"id_kota"`
+		Token        string   `json:"token"`
 	}
 )
 
-func (lp *LoginParam) MapToLoginResponse() *LoginResponse {
-	return &LoginResponse{
-		Nama:         lp.User.Nama,
-		NoTelp:       lp.User.NoTelp,
-		TanggalLahir: helper.ConvertDateToString(lp.User.TanggalLahir),
-		Tentang:      lp.User.Tentang,
-		Pekerjaan:    lp.User.Pekerjaan,
-		Email:        lp.User.Email,
-		Provinsi:     *lp.Provinsi,
-		Kota:         *lp.Kota,
-		Token:        lp.Token,
+func (p *LoginParam) MapToResponse() *Login {
+	return &Login{
+		Nama:         p.User.Nama,
+		NoTep:        p.User.NoTelp,
+		TanggalLahir: helper.ConvertDateToString(p.User.TanggalLahir),
+		Tentang:      p.User.Tentang,
+		Pekerjaan:    p.User.Pekerjaan,
+		Email:        p.User.Email,
+		Provinsi:     *p.Provinsi,
+		Kota:         *p.Kota,
+		Token:        p.Token,
 	}
 }

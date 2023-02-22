@@ -6,12 +6,12 @@ import (
 )
 
 type (
-	LoginRequest struct {
+	Login struct {
 		NoTelp    string `json:"no_telp"`
 		KataSandi string `json:"kata_sandi"`
 	}
 
-	RegisterRequest struct {
+	Register struct {
 		Nama         string `json:"nama"`
 		KataSandi    string `json:"kata_sandi"`
 		NoTelp       string `json:"no_telp"`
@@ -23,18 +23,18 @@ type (
 	}
 )
 
-func MapRegisterRequest(request *RegisterRequest) *model.User {
+func (r *Register) MapRequest() *model.User {
 	return &model.User{
-		Nama:         request.Nama,
-		KataSandi:    helper.CreateHash(request.KataSandi),
-		NoTelp:       request.NoTelp,
-		TanggalLahir: helper.ConvertStringToDate(request.TanggalLahir),
-		Pekerjaan:    request.Pekerjaan,
-		Email:        request.Email,
-		IdProvinsi:   request.IdProvinsi,
-		IdKota:       request.IdKota,
+		Nama:         r.Nama,
+		KataSandi:    helper.CreateHash(r.KataSandi),
+		NoTelp:       r.NoTelp,
+		TanggalLahir: helper.ConvertStringToDate(r.TanggalLahir),
+		Pekerjaan:    r.Pekerjaan,
+		Email:        r.Email,
+		IdProvinsi:   r.IdProvinsi,
+		IdKota:       r.IdKota,
 		Toko: model.Toko{
-			NamaToko: request.Nama,
+			NamaToko: r.Nama,
 		},
 	}
 }
