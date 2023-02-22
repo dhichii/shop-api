@@ -143,26 +143,25 @@ func UpdateCategoryHandler(c *fiber.Ctx) error {
 	DB := database.InitMySQL()
 	ctx := c.Context()
 
-	query := DB.WithContext(ctx).Where("id", id).Updates(request.MapRequest())
-	if query.Error != nil {
+	if err := DB.WithContext(ctx).Where("id", id).First(new(model.Category)).Updates(request.MapRequest()).Error; err != nil {
+		if err.Error() == helper.NOT_FOUND {
+			return helper.FailedResponse(
+				helper.ResponseParam{
+					Ctx:      c,
+					HttpCode: http.StatusBadRequest,
+					Method:   method,
+					Errors:   []string{helper.NOT_FOUND},
+					Data:     nil,
+				},
+			)
+		}
+
 		return helper.FailedResponse(
 			helper.ResponseParam{
 				Ctx:      c,
 				HttpCode: http.StatusInternalServerError,
 				Method:   method,
 				Errors:   []string{http.StatusText(http.StatusInternalServerError)},
-				Data:     nil,
-			},
-		)
-	}
-
-	if query.RowsAffected <= 0 && query.Error == nil {
-		return helper.FailedResponse(
-			helper.ResponseParam{
-				Ctx:      c,
-				HttpCode: http.StatusBadRequest,
-				Method:   method,
-				Errors:   []string{helper.NOT_FOUND},
 				Data:     nil,
 			},
 		)
