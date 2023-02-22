@@ -107,8 +107,8 @@ func LoginHandler(c *fiber.Ctx) error {
 
 func RegisterHandler(c *fiber.Ctx) error {
 	method := "POST"
-	user := &request.Register{}
-	if err := c.BodyParser(user); err != nil {
+	request := &request.Register{}
+	if err := c.BodyParser(request); err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{Ctx: c, HttpCode: http.StatusNotAcceptable, Method: method, Errors: []string{err.Error()}, Data: nil},
 		)
@@ -116,7 +116,7 @@ func RegisterHandler(c *fiber.Ctx) error {
 
 	DB := database.InitMySQL()
 	ctx := c.Context()
-	if err := DB.WithContext(ctx).Create(request.MapRegisterRequest(user)).Error; err != nil {
+	if err := DB.WithContext(ctx).Create(request.MapRequest()).Error; err != nil {
 		if strings.Contains(err.Error(), "1062") {
 			return helper.FailedResponse(
 				helper.ResponseParam{
