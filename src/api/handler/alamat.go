@@ -14,12 +14,12 @@ import (
 
 func GetMyAlamatHandler(c *fiber.Ctx) error {
 	method := "GET"
-	userID := helper.GetUserIDFromLocals(c)
+	idUser := helper.GetUserIDFromLocals(c)
 	DB := database.InitMySQL()
 	ctx := c.Context()
 	data := []response.Alamat{}
 
-	if err := DB.WithContext(ctx).Find(&data, "user_id", userID).Error; err != nil {
+	if err := DB.WithContext(ctx).Find(&data, "id_user", idUser).Error; err != nil {
 		return helper.FailedResponse(
 			helper.ResponseParam{
 				Ctx:      c,
@@ -51,11 +51,11 @@ func GetAlamatByIDHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	userID := helper.GetUserIDFromLocals(c)
+	idUser := helper.GetUserIDFromLocals(c)
 	DB := database.InitMySQL()
 	ctx := c.Context()
 	data := &response.Alamat{}
-	condition := fmt.Sprintf("user_id = %d AND id = %d", userID, id)
+	condition := fmt.Sprintf("id_user = %d AND id = %d", idUser, id)
 
 	if err := DB.WithContext(ctx).Where(condition).First(data).Error; err != nil {
 		if err.Error() == helper.NOT_FOUND {
@@ -101,11 +101,11 @@ func CreateAlamatHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	userID := helper.GetUserIDFromLocals(c)
+	idUser := helper.GetUserIDFromLocals(c)
 	DB := database.InitMySQL()
 	ctx := c.Context()
 	data := request.MapRequest()
-	data.UserID = userID
+	data.IdUser = idUser
 
 	if err := DB.WithContext(ctx).Create(data).Error; err != nil {
 		return helper.FailedResponse(
@@ -146,10 +146,10 @@ func UpdateAlamatHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	userID := helper.GetUserIDFromLocals(c)
+	idUser := helper.GetUserIDFromLocals(c)
 	DB := database.InitMySQL()
 	ctx := c.Context()
-	condition := fmt.Sprintf("user_id = %d AND id = %d", userID, id)
+	condition := fmt.Sprintf("id_user = %d AND id = %d", idUser, id)
 
 	if err := DB.WithContext(ctx).Where(condition).First(new(model.Alamat)).Updates(request.MapRequest()).Error; err != nil {
 		if err.Error() == helper.NOT_FOUND {
@@ -195,10 +195,10 @@ func DeleteAlamatHandler(c *fiber.Ctx) error {
 		)
 	}
 
-	userID := helper.GetUserIDFromLocals(c)
+	idUser := helper.GetUserIDFromLocals(c)
 	DB := database.InitMySQL()
 	ctx := c.Context()
-	condition := fmt.Sprintf("user_id = %d AND id = %d", userID, id)
+	condition := fmt.Sprintf("id_user = %d AND id = %d", idUser, id)
 
 	query := DB.WithContext(ctx).Where(condition).Delete(new(model.Alamat))
 	if query.Error != nil {
