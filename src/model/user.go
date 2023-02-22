@@ -18,5 +18,5 @@ type User struct {
 	UpdatedAt    time.Time `gorm:"type:date"`
 	CreatedAt    time.Time `gorm:"type:date"`
 	Toko         Toko      `gorm:"foreignKey:IdUser"`
-	Alamat       []Alamat  `gorm:"constraint:OnDelete:CASCADE"`
+	Alamat       []Alamat  `gorm:"foreignKey:IdUser;constraint:OnDelete:CASCADE"`
 }
