@@ -41,5 +41,11 @@ func InitServer() *fiber.App {
 	alamat.Put("/:id", handler.UpdateAlamatHandler)
 	alamat.Delete("/:id", handler.DeleteAlamatHandler)
 
+	toko := v1.Group("/toko").Use(middleware.Authentication())
+	toko.Get("/my", handler.GetMyTokoHandler)
+	toko.Put("/:id", handler.UpdateTokoHandler)
+	toko.Get("", handler.GetAllTokoHandler)
+	toko.Get("/:id", handler.GetTokoByIDHandler)
+
 	return app
 }
