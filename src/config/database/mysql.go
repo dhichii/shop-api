@@ -33,5 +33,7 @@ func MigrateMySQL() {
 		&model.Toko{},
 		&model.Category{},
 		&model.Alamat{},
+		&model.Produk{},
+		&model.FotoProduk{},
 	)
 }
