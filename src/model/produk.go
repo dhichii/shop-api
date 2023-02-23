@@ -15,7 +15,7 @@ type (
 		UpdatedAt     time.Time `gorm:"type:date"`
 		IdToko        int
 		IdCategory    int
-		Photos        []FotoProduk `gorm:"foreignKey:IdProduk;constraint:OnDelete:CASCADE"`
+		Photos        []FotoProduk `gorm:"foreignKey:IdProduk;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	}
 
 	FotoProduk struct {
