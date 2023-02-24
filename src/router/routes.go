@@ -58,5 +58,11 @@ func InitServer() *fiber.App {
 	image.Static("/toko", "./public/toko")
 	image.Static("/produk", "./public/produk")
 
+	provKota := v1.Group("/provcity")
+	provKota.Get("/listprovinsi", handler.GetAllProvinsiHandler)
+	provKota.Get("/detailprovinsi/:id", handler.GetProvinsiByIDHandler)
+	provKota.Get("/listkota/:id", handler.GetAllKotaByProvinsiIDHandler)
+	provKota.Get("/detailkota/:id", handler.GetKotaByIDHandler)
+
 	return app
 }
