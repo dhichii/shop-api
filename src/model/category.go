@@ -7,4 +7,5 @@ type Category struct {
 	NamaCategory string    `gorm:"type:varchar(255)"`
 	CreatedAt    time.Time `gorm:"type:date"`
 	UpdatedAt    time.Time `gorm:"type:date"`
+	Produk       []Produk  `gorm:"foreignKey:IdCategory;constraint:OnDelete:SET NULL"`
 }

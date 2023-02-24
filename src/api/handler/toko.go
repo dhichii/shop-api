@@ -19,7 +19,7 @@ func GetMyTokoHandler(c *fiber.Ctx) error {
 	ctx := c.Context()
 	data := &response.MyToko{}
 
-	if err := DB.WithContext(ctx).Table("toko").Where("id_user", IdUser).First(&data).Error; err != nil {
+	if err := DB.WithContext(ctx).Table("toko").Where("id_user", IdUser).First(data).Error; err != nil {
 		if err.Error() == helper.NOT_FOUND {
 			return helper.FailedResponse(
 				helper.ResponseParam{

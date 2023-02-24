@@ -9,4 +9,5 @@ type Toko struct {
 	UrlFoto   string    `gorm:"type:varchar(255)"`
 	UpdatedAt time.Time `gorm:"type:date"`
 	CreatedAt time.Time `gorm:"type:date"`
+	Produk    []Produk  `gorm:"foreignKey:IdToko;constraint:OnDelete:CASCADE"`
 }
