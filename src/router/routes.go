@@ -34,18 +34,25 @@ func InitServer() *fiber.App {
 	user.Get("", handler.GetMyProfileHandler)
 	user.Put("", handler.UpdateProfileHandler)
 
-	alamat := v1.Group("/user/alamat").Use(middleware.Authentication())
+	alamat := v1.Group("/user/alamat", middleware.Authentication())
 	alamat.Get("", handler.GetMyAlamatHandler)
 	alamat.Get("/:id", handler.GetAlamatByIDHandler)
 	alamat.Post("", handler.CreateAlamatHandler)
 	alamat.Put("/:id", handler.UpdateAlamatHandler)
 	alamat.Delete("/:id", handler.DeleteAlamatHandler)
 
-	toko := v1.Group("/toko").Use(middleware.Authentication())
+	toko := v1.Group("/toko", middleware.Authentication())
 	toko.Get("/my", handler.GetMyTokoHandler)
 	toko.Put("/:id", handler.UpdateTokoHandler)
 	toko.Get("", handler.GetAllTokoHandler)
 	toko.Get("/:id", handler.GetTokoByIDHandler)
+
+	produk := v1.Group("/produk", middleware.Authentication())
+	produk.Get("", handler.GetAllProdukHandler)
+	produk.Get("/:id", handler.GetProdukByIDHandler)
+	produk.Post("", handler.CreateProductHandler)
+	produk.Put("/:id", middleware.ProdukAuthorization(), handler.UpdateProdukHandler)
+	produk.Delete("/:id", middleware.ProdukAuthorization(), handler.DeleteProdukHandler)
 
 	return app
 }
