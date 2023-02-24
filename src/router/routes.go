@@ -54,5 +54,9 @@ func InitServer() *fiber.App {
 	produk.Put("/:id", middleware.ProdukAuthorization(), handler.UpdateProdukHandler)
 	produk.Delete("/:id", middleware.ProdukAuthorization(), handler.DeleteProdukHandler)
 
+	image := v1.Group("/image", middleware.Authentication())
+	image.Static("/toko", "./public/toko")
+	image.Static("/produk", "./public/produk")
+
 	return app
 }
