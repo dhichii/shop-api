@@ -1,5 +1,7 @@
 package request
 
+import "shop-api/src/model"
+
 type (
 	Trx struct {
 		MethodBayar      string      `json:"method_bayar"`
@@ -12,3 +14,10 @@ type (
 		Kuantitas int `json:"kuantitas"`
 	}
 )
+
+func (r *Trx) MapRequest() *model.Trx {
+	return &model.Trx{
+		MethodBayar:      r.MethodBayar,
+		AlamatPengiriman: r.AlamatPengiriman,
+	}
+}
