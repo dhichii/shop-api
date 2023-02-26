@@ -64,5 +64,10 @@ func InitServer() *fiber.App {
 	provKota.Get("/listkota/:id", handler.GetAllKotaByProvinsiIDHandler)
 	provKota.Get("/detailkota/:id", handler.GetKotaByIDHandler)
 
+	trx := v1.Group("/trx").Use(middleware.Authentication())
+	trx.Get("", handler.GetAllTrxHandler)
+	trx.Get("/:id", handler.GetTrxByIDHandler)
+	trx.Post("", handler.CreateTrxHandler)
+
 	return app
 }
