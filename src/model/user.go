@@ -17,6 +17,7 @@ type User struct {
 	IsAdmin      bool
 	UpdatedAt    time.Time `gorm:"type:date"`
 	CreatedAt    time.Time `gorm:"type:date"`
-	Toko         Toko      `gorm:"foreignKey:IdUser"`
+	Toko         Toko      `gorm:"foreignKey:IdUser;constraint:OnDelete:CASCADE"`
 	Alamat       []Alamat  `gorm:"foreignKey:IdUser;constraint:OnDelete:CASCADE"`
+	Trx          []Trx     `gorm:"foreignKey:IdUser;OnDelete:CASCADE"`
 }
